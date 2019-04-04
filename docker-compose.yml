@@ -10,3 +10,5 @@ services:
       - "1053:53/tcp"
       - "1053:53/udp"
       - "1092:9292/tcp"
+    environment:
+      - DNS_MASTER_SERVER=1 # 0 for slave
