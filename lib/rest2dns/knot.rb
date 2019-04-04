@@ -15,7 +15,7 @@ class KnotSyncDNS
 
   def setup_zone(zone, content)
     add_zone_to_list(zone)
-    store_zone_file(zone, content)
+    store_zone_file(zone, content) if CONF::DNS_SERVER_MASTER
   end
 
   def destroy_zone(zone)
