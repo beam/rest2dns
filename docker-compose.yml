@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  rest2dns:
+    build: .
+    volumes:
+      - ./config:/usr/app/config # rest2dns app config
+      - ./knot-config:/etc/knot/ # knot config
+      - ./knot-journaldb:/var/lib/knot/ # knot keys, journaldb, timers
+    ports:
+      - "1053:53/tcp"
+      - "1053:53/udp"
+      - "1092:9292/tcp"

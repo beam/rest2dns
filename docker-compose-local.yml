@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  rest2dns-primary:
+    build: .
+    volumes:
+      - ./config:/usr/app/config # rest2dns app config
+      - ./knot-pri-config:/etc/knot/ # knot config
+      - ./knot-pri-journaldb:/var/lib/knot/ # knot keys, journaldb, timers
+    ports:
+      - "1053:53/tcp"
+      - "1053:53/udp"
+      - "1092:9292/tcp"
+    environment:
+      - DNS_MASTER_SERVER=1
+    networks:
+      testing_net:
+        ipv4_address: 172.28.1.2
+
+  rest2dns-secondary:
+    build: .
+    volumes:
+      - ./config:/usr/app/config
+      - ./knot-sec-config:/etc/knot/ # knot config
+      - ./knot-pri-journaldb:/var/lib/knot/ # knot keys, journaldb, timers
+    ports:
+      - "1054:53/tcp"
+      - "1054:53/udp"
+      - "1093:9292/tcp"
+    environment:
+      - DNS_MASTER_SERVER=0
+    networks:
+      testing_net:
+        ipv4_address: 172.28.1.3
+
+networks:
+    testing_net:
+      ipam:
+        driver: default
+        config:
+          - subnet: 172.28.0.0/16
