@@ -23,6 +23,7 @@ class SyncDNS
     end
   end
 
+  # FIXME: vytahnout zonu z contentu
   def self.check_zone(zone, content)
     if CONF::DNS_SERVER_TYPE == :knot
       knot_dns_check = KnotZoneCheck.new(zone, content)

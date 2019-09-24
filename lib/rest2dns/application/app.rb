@@ -31,7 +31,7 @@ class Rest2DnsApp < Sinatra::Base
   # setup zone
   post '/zones' do
     data = json_params
-    result = SyncDNS.check_zone('syncdns-check.tld', data['content'])
+    result = SyncDNS.check_zone(data['zones'].first, data['content'])
     if result.last.success?
       result = SyncDNS.setup_zone(data['zones'], data['content'])
     end
